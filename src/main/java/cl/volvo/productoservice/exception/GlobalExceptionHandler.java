@@ -4,12 +4,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.nio.file.AccessDeniedException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(RecursoNoEncontradoException.class)
-    public ResponseEntity<Map<String, Object>> handleNotFound(RecursoNoEncontradoException ex) {
+    public ResponseEntity<Map<String, String>> handleNotFound(RecursoNoEncontradoException ex) {
         log.warn(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("ERROR", ex.getMessage()));
     }
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Map<String, String>> handleTipoInvalido(MethodArgumentTypeMismatchException ex) {
         log.warn("PARÁMETRO INVÁLIDO: {} = {}", ex.getName(), ex.getValue());
-        return ResponseEntity.badRequest().body(Map.of("ERROR", "EL VALOR: '" + ex.getValue() + "' NO ES VÁLIDO PARA" + ex.getName()));
+        return ResponseEntity.badRequest().body(Map.of("ERROR", "EL VALOR: '" + ex.getValue() + "' NO ES VÁLIDO PARA " + ex.getName()));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
