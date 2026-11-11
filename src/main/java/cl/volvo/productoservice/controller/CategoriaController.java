@@ -10,6 +10,7 @@ import cl.volvo.productoservice.dto.CategoriaRequestDTO;
 import cl.volvo.productoservice.dto.CategoriaResponseDTO;
 import cl.volvo.productoservice.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/v1/categorias")
 @RequiredArgsConstructor
+@Tag(name = "Categorías", description = "CRUD DE CATEGORÍAS DE JUEGOS")
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
@@ -53,7 +55,7 @@ public class CategoriaController {
 
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Desactivar una categoria (usando borrado lógico")
+    @Operation(summary = "Desactivar una categoria (usando borrado lógico)")
     public ResponseEntity<Map<String, String>> eliminar(@PathVariable Long id) {
         log.info("DELETE /api/v1/categorias/{} - ELIMINAR CATEGORIA", id);
         categoriaService.eliminar(id);

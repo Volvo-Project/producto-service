@@ -10,6 +10,7 @@ import cl.volvo.productoservice.dto.ProductoRequestDTO;
 import cl.volvo.productoservice.dto.ProductoResponseDTO;
 import cl.volvo.productoservice.service.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/v1/productos")
 @RequiredArgsConstructor
+@Tag(name = "Productos", description = "CRUD DE PRODUCTOS (JUEGOS) DE LA TIENDA")
 public class ProductoController {
 
     private final ProductoService productoService;
@@ -31,7 +33,7 @@ public class ProductoController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar un producto por id")
-    public ResponseEntity<ProductoResponseDTO> obtenerPorid(@PathVariable Long id) {
+    public ResponseEntity<ProductoResponseDTO> obtenerPorId(@PathVariable Long id) {
         log.info("GET /api/v1/productos/{} - BUSCAR POR ID", id);
         return ResponseEntity.ok(productoService.obtenerPorId(id));
     }
@@ -60,7 +62,7 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Desactivar un producto (borrador lógico)")
+    @Operation(summary = "Desactivar un producto (borrado lógico)")
     public ResponseEntity<Map<String, String>> eliminar(@PathVariable Long id) {
         log.info("DELETE /api/v1/productos/{} - ELIMINAR PRODUCTO", id);
         productoService.eliminar(id);
