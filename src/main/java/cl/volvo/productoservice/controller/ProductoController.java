@@ -1,6 +1,7 @@
 package cl.volvo.productoservice.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class ProductoController {
 
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Crear un producto")
     public ResponseEntity<ProductoResponseDTO> crear(@Valid @RequestBody ProductoRequestDTO dto){
         log.info("POST /api/v1/productos - CREAR PRODUCTO {}", dto.getCodigo());
@@ -54,6 +56,7 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Actualizar un producto")
     public ResponseEntity<ProductoResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody ProductoRequestDTO dto){
         log.info("PUT /api/v1/productos/{} - ACTUALIZAR PRODUCTO", id);
@@ -62,6 +65,7 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Desactivar un producto (borrado lógico)")
     public ResponseEntity<Map<String, String>> eliminar(@PathVariable Long id) {
         log.info("DELETE /api/v1/productos/{} - ELIMINAR PRODUCTO", id);

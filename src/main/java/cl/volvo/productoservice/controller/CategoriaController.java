@@ -1,6 +1,7 @@
 package cl.volvo.productoservice.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class CategoriaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Crear una categoria")
     public ResponseEntity<CategoriaResponseDTO> crear(@Valid @RequestBody CategoriaRequestDTO dto) {
         log.info("POST /api/v1/categorias - CREAR CATEGORIA {}", dto.getNombre());
@@ -47,6 +49,7 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Actualizar una categoria")
     public ResponseEntity<CategoriaResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody CategoriaRequestDTO dto) {
         log.info("PUT /api/v1/categorias/{} - ACTUALIZAR CATEGORIA", id);
@@ -55,6 +58,7 @@ public class CategoriaController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Desactivar una categoria (usando borrado lógico)")
     public ResponseEntity<Map<String, String>> eliminar(@PathVariable Long id) {
         log.info("DELETE /api/v1/categorias/{} - ELIMINAR CATEGORIA", id);

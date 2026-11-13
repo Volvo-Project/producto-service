@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -75,8 +76,8 @@ class ProductoControllerTest {
         mockMvc.perform(get("/api/v1/productos/asdjjas")).andExpect(status().isBadRequest());
     }
 
-
     @Test
+    @WithMockUser(roles = "ADMIN")
     @DisplayName("POST: CREAR EL PRODUCTO (201)")
     void crear_ok() throws Exception {
         when(productoService.crear(any(ProductoRequestDTO.class))).thenReturn(respuesta);
@@ -85,6 +86,7 @@ class ProductoControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     @DisplayName("POST : SIN NOMBRE RESPONDE 400 Y NO LLAMA AL SERVICE")
     void crear_sinNombre() throws Exception {
         request.setNombre("");

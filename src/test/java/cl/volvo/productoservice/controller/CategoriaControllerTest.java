@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
@@ -71,7 +72,8 @@ class CategoriaControllerTest {
     }
 
     @Test
-    @DisplayName("POST: CREA LA CATEGORÍA (201)")
+    @WithMockUser(roles = "ADMIN")
+    @DisplayName("POST: ADMIN CREA LA CATEGORÍA (201)")
     void crear_ok() throws Exception {
         when(categoriaService.crear(any(CategoriaRequestDTO.class))).thenReturn(respuesta);
 
@@ -84,6 +86,19 @@ class CategoriaControllerTest {
     }
 
     @Test
+    @DisplayName("POST: SIN USUARIO RESPONDE 403 Y NO LLAMA AL SERVICE")
+    void crear_sinUsuario() throws Exception {
+        mockMvc.perform(post("/api/v1/categorias")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.ERROR").value("NO TIENES PERMISOS PARA REALIZAR ESTA ACCIÓN"));
+
+        verify(categoriaService, never()).crear(any());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
     @DisplayName("POST: SIN FILTRO RESPONDE 400 Y NO LLAMA AL SERVICE")
     void crear_sinFiltro() throws Exception {
         request.setFiltro("");
@@ -98,12 +113,23 @@ class CategoriaControllerTest {
     }
 
     @Test
-    @DisplayName("DELETE: DESACTIVA LA CATEGORÍA (200)")
+    @WithMockUser(roles = "ADMIN")
+    @DisplayName("DELETE: ADMIN DESACTIVA LA CATEGORÍA (200)")
     void eliminar() throws Exception {
         mockMvc.perform(delete("/api/v1/categorias/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.MENSAJE").value("CATEGORIA ELIMINADA CORRECTAMENTE"));
 
         verify(categoriaService).eliminar(1L);
+    }
+
+    @Test
+    @WithMockUser(roles = "CLIENTE")
+    @DisplayName("DELETE: CLIENTE NO PUEDE ELIMINAR (403)")
+    void eliminar_comoCliente() throws Exception {
+        mockMvc.perform(delete("/api/v1/categorias/1"))
+                .andExpect(status().isForbidden());
+
+        verify(categoriaService, never()).eliminar(any());
     }
 }
