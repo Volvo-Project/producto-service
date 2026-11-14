@@ -28,6 +28,7 @@ public class ProductoService {
                 producto.getCodigo(),
                 producto.getNombre(),
                 producto.getPrecio(),
+                producto.getStock(),
                 producto.getPrecio() == 0,
                 producto.getDescripcion(),
                 producto.getImagen(),
@@ -64,6 +65,7 @@ public class ProductoService {
         producto.setCodigo(dto.getCodigo());
         producto.setNombre(dto.getNombre());
         producto.setPrecio(dto.getPrecio());
+        producto.setStock(dto.getStock());
         producto.setDescripcion(dto.getDescripcion());
         producto.setImagen(dto.getImagen());
         producto.setImagenDetalle(dto.getImagenDetalle());

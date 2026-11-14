@@ -14,6 +14,7 @@ public class ProductoResponseDTO {
     private String codigo;
     private String nombre;
     private Integer precio;
+    private Integer stock;
     //el esgratis podría sacarse con el puro precio solamente,
     // con un ifelse __tengo q revisar el front
     private boolean esGratis;

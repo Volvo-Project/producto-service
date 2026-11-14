@@ -33,9 +33,9 @@ public class ProductoRepositoryTest {
         accion = em.persist(new Categoria(null, "Acción", "acc", true));
         Categoria terror = em.persist(new Categoria(null,"Terror", "hor", true));
 
-        em.persist(new Producto(null, "WFRM-01", "Warframe", 0, null, "/a.jpg", "/b.jpg", "Acción", accion, true));
-        em.persist(new Producto(null, "SPPL-03", "Super People", 7990, null, "/a.jpg", "/b.jpg", "Battle Royale", accion, false));
-        em.persist(new Producto(null, "TERR-01", "Juego de Terror", 5990, null, "/a.jpg", "/b.jpg", "Terror", terror, true));
+        em.persist(new Producto(null, "WFRM-01", "Warframe", 0, 100, null, "/a.jpg", "/b.jpg", "Acción", accion, true));
+        em.persist(new Producto(null, "SPPL-03", "Super People", 7990, 100, null, "/a.jpg", "/b.jpg", "Battle Royale", accion, false));
+        em.persist(new Producto(null, "TERR-01", "Juego de Terror", 5990, 100, null, "/a.jpg", "/b.jpg", "Terror", terror, true));
     }
 
     @Test

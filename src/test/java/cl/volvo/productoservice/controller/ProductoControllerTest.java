@@ -48,9 +48,9 @@ class ProductoControllerTest {
 
     @BeforeEach
     void setUp() {
-        respuesta = new ProductoResponseDTO(1L, "WFRM-01", "Warframe", 0, true, "Shooter cooperativo", "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", "Acción", "acc");
+        respuesta = new ProductoResponseDTO(1L, "WFRM-01", "Warframe", 0, 100, true, "Shooter cooperativo", "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", "Acción", "acc");
 
-        request = new ProductoRequestDTO("WFRM-01", "Warframe", 0, "Shooter cooperativo", "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", 1L);
+        request = new ProductoRequestDTO("WFRM-01", "Warframe", 0, 100, "Shooter cooperativo", "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", 1L);
 
     }
 

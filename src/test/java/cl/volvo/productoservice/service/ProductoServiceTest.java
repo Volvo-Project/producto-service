@@ -39,7 +39,7 @@ public class ProductoServiceTest {
     @BeforeEach
     void setUp() {
         Categoria accion = new Categoria(1L, "Acción", "acc", true);
-        warframe = new Producto(1L, "WFRM-01", "Warframe", 0, "Shooter cooperativo", "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", accion, true);
+        warframe = new Producto(1L, "WFRM-01", "Warframe", 0, 100, "Shooter cooperativo", "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", accion, true);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ProductoServiceTest {
     @DisplayName("CREAR: GUARDA EL PRODUCTO CON SU CATEGORÍA")
     void crear_ok() {
 
-        ProductoRequestDTO dto = new ProductoRequestDTO("WFRM-01", "Warframe", 0, "Shooter cooperativo", "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", 1L);
+        ProductoRequestDTO dto = new ProductoRequestDTO("WFRM-01", "Warframe", 0, 100, "Shooter cooperativo", "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", 1L);
 
         when(categoriaService.buscarActiva(1L)).thenReturn(warframe.getCategoria());
         when(productoRepo.save(any(Producto.class))).thenAnswer(inv -> {
@@ -101,7 +101,7 @@ public class ProductoServiceTest {
     @Test
     @DisplayName("CREAR: SI LA CATEGORIA NO EXISTE, NO SE GUARDA NADA")
     void crear_categoriaNoExiste(){
-        ProductoRequestDTO dto = new ProductoRequestDTO("WFRM-01", "Warframe", 0, null, "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", 99L);
+        ProductoRequestDTO dto = new ProductoRequestDTO("WFRM-01", "Warframe", 0, 100, null, "/card.jpg", "/detalle.jpg", "Acción, Cooperativo", 99L);
 
         when(categoriaService.buscarActiva(99L)).thenThrow(new RecursoNoEncontradoException("Categoria", 99L));
 

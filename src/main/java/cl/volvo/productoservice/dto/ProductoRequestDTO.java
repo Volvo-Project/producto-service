@@ -22,6 +22,10 @@ public class ProductoRequestDTO {
     @PositiveOrZero(message = "EL PRECIO NO PUEDE SER NEGATIVO")
     private Integer precio;
 
+    @NotNull(message = "EL STOCK ES OBLIGATORIO")
+    @PositiveOrZero(message = "EL STOCK NO PUEDE SER NEGATIVO")
+    private Integer stock;
+
     @Size(max = 1000, message = "LA DESCRIPCIÓN NO PUEDE SUPERAR LOS 1000 CARACTERES")
     private String descripcion;
 
