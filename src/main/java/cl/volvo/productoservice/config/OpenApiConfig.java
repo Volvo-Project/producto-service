@@ -19,7 +19,8 @@ public class OpenApiConfig {
                         .version("1.0.0")
                         .description("API REST para gestionar los productos (juegos) y sus categorías de la tienda Volvo"))
                 .servers(List.of(
-                        new Server().url("http://localhost:8082").description("Servidor local")
+                        new Server().url("http://localhost:8082").description("Servidor local"),
+                        new Server().url("http://34.237.105.65:8082").description("AWS")
                 ));
     }
 }
